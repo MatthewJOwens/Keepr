@@ -23,9 +23,9 @@ namespace Keepr.Repositories
 
     internal Keep Create(Keep keepData)
     {
-      keepData.views = 0;
-      keepData.shares = 0;
-      keepData.keeps = 0;
+      keepData.Views = 0;
+      keepData.Shares = 0;
+      keepData.Keeps = 0;
       string sql = @"INSERT INTO keeps
         (name, description, userId, img, isPrivate, views, shares, keeps)
         VALUES

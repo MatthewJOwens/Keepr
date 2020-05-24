@@ -4,10 +4,14 @@
       <div class="col-10 offset-1">
         <h1>Welcome Home</h1>
         <div class="card-columns">
-          <Keep v-for="keep in keeps" :keepData="keep" :key="keep.id">Keep component not loaded.</Keep>
+          <Keep
+            v-for="keep in publicKeeps"
+            :keepData="keep"
+            :key="keep.id"
+          >Keep component not loaded.</Keep>
         </div>
       </div>
-      <div class="col-1">
+      <div class="col-1 d-flex justify-content-end align-items-end">
         <CreateKeep />
       </div>
     </div>
@@ -16,14 +20,23 @@
 
 
 <script>
+import Keep from "../components/Keep.vue";
+import CreateKeep from "../components/CreateKeep.vue";
 export default {
   name: "mainVue",
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    publicKeeps() {
+      return this.$store.state.publicKeeps;
+    }
+  },
+  mounted() {
+    this.$store.dispatch("getPublic");
+  },
   methods: {},
-  components: {}
+  components: { Keep, CreateKeep }
 };
 </script>
 
