@@ -16,10 +16,19 @@
     <div class="card-body" data-toggle="modal" :data-target="'#modal-' + keepData.id">
       <h5 class="card-title">{{keepData.name}}</h5>
     </div>
-    <div class="card-footer row d-flex justify-content-around">
-      <div class="col">K:{{keepData.keeps}}</div>
-      <div class="col">S:{{keepData.shares}}</div>
-      <div class="col">V:{{keepData.views}}</div>
+    <div class="card-footer row d-flex justify-content-around m-0">
+      <div class="col">
+        <i class="fab fa-korvue"></i>
+        {{keepData.keeps}}
+      </div>
+      <div class="col">
+        <i class="fas fa-share"></i>
+        {{keepData.shares}}
+      </div>
+      <div class="col">
+        <i class="far fa-eye"></i>
+        {{keepData.views}}
+      </div>
     </div>
     <div class="modal fade" :id="'modal-' + keepData.id" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -35,7 +44,7 @@
             <!-- v-if="keepData.description != null" -->
             <p class="card-text">{{keepData.description}}</p>
           </div>
-          <div class="modal-footer row d-flex justify-content.around">
+          <div class="modal-footer row d-flex justify-content-around m-0 text-center">
             <div class="col">K:{{keepData.keeps}}</div>
             <div class="col">S:{{keepData.shares}}</div>
             <div class="col">V:{{keepData.views}}</div>

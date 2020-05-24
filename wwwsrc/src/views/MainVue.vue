@@ -2,8 +2,7 @@
   <div class="mainVue container-fluid">
     <div class="row">
       <div class="col-10 offset-1">
-        <h1>Welcome Home</h1>
-        <div class="card-columns">
+        <div class="card-columns m-2">
           <Keep
             v-for="keep in publicKeeps"
             :keepData="keep"
