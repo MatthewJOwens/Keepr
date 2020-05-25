@@ -47,13 +47,11 @@
             <div class="col p-0">K:{{keepData.keeps}}</div>
             <div class="col p-0">S:{{keepData.shares}}</div>
             <div class="col p-0">V:{{keepData.views}}</div>
-            <div v-if="this.$auth.isauthenticated">
-              <div
-                class="col-12"
-                v-if="keepData.userId == this.$auth.user.email || keepData.userId == this.$auth.user.sub"
-              >
-                <button class="btn btn-danger btn-block" @click="deleteKeep()">Delete Keep</button>
-              </div>
+            <div
+              class="col-12"
+              v-if="keepData.userId == this.$auth.user.email || keepData.userId == this.$auth.user.sub"
+            >
+              <button class="btn btn-danger btn-block" @click="deleteKeep()">Delete Keep</button>
             </div>
           </div>
         </div>
@@ -77,6 +75,7 @@ export default {
       let confirm = window.confirm("Are you sure you want to delete this?");
       if (confirm) {
         console.log("Delorted");
+        this.$store.dispatch("deleteKeep", this.keepData);
       }
     }
   },

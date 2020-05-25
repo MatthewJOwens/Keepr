@@ -40,11 +40,31 @@ export default new Vuex.Store({
       }
     },
     async createKeep({ commit, dispatch }, newKeep) {
-      let res = await api.post("keeps", newKeep)
-      if (newKeep.isPrivate == true) {
-        router.push({ name: "dashboard", params: {} })
-      } else {
-        dispatch("getPublic")
+      try {
+        let res = await api.post("keeps", newKeep)
+        if (newKeep.isPrivate == true) {
+          router.push({ name: "dashboard", params: {} })
+        } else {
+          dispatch("getPublic")
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async deleteKeep({ commit, dispatch }, keepToDelete) {
+      try {
+        let res = api.delete("keeps/" + keepToDelete.id)
+        if (res) {
+          console.log("Successfully deleted.")
+          // do I need to do anything with vaultkeeps?
+        }
+        if (keepToDelete.isPrivate == false) {
+          router.push({ name: "mainVue", params: {} })
+        } else if (keepToDelete.isPrivate == true) {
+          router.push({ name: "dashboard", params: {} })
+        }
+      } catch (error) {
+        console.error(error)
       }
     }
   }
