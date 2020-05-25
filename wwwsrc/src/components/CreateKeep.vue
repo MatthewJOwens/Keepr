@@ -41,10 +41,17 @@
                 <label for="keepImg">Image URL:</label>
                 <input type="text" class="form-control" id="keepImg" required v-model="newKeep.img" />
               </div>
+
               <div class="form-check">
-                <input type="checkbox" id="isPublic" class="form-check-input" value="isPublic" />
-                <label for="isPublic" class="form-check-label">Check here to make it public</label>
+                <input
+                  type="checkbox"
+                  id="isPublic"
+                  class="form-check-input"
+                  v-model="newKeep.isPrivate"
+                />
+                <label for="isPublic" class="form-check-label">Check here to keep it private</label>
               </div>
+
               <div class="form-group">
                 <label for="keepDescription">Post description:</label>
                 <textarea class="form-control" id="keepDescription" v-model="newKeep.description" />
@@ -68,13 +75,15 @@ export default {
   name: "create-keep",
   data() {
     return {
-      newKeep: {}
+      newKeep: {
+        isPrivate: true
+      }
     };
   },
   computed: {},
   methods: {
     createKeep() {
-      this.newKeep.isPrivate = !event.target.isPublic;
+      // this.newKeep.isPrivate = !event.target.isPublic;
       this.$store.dispatch("createKeep", this.newKeep);
       this.newKeep = {};
     }

@@ -17,15 +17,15 @@
       <h5 class="card-title">{{keepData.name}}</h5>
     </div>
     <div class="card-footer row d-flex justify-content-around m-0">
-      <div class="col">
+      <div class="col p-0">
         <i class="fab fa-korvue"></i>
         {{keepData.keeps}}
       </div>
-      <div class="col">
+      <div class="col p-0">
         <i class="fas fa-share"></i>
         {{keepData.shares}}
       </div>
-      <div class="col">
+      <div class="col p-0">
         <i class="far fa-eye"></i>
         {{keepData.views}}
       </div>
@@ -44,11 +44,16 @@
             <p class="card-text">{{keepData.description}}</p>
           </div>
           <div class="modal-footer row d-flex justify-content-around m-0 text-center">
-            <div class="col">K:{{keepData.keeps}}</div>
-            <div class="col">S:{{keepData.shares}}</div>
-            <div class="col">V:{{keepData.views}}</div>
-            <div class="col-12" v-if="keepData.userId == this.$auth.user.email">
-              <button class="btn btn-danger btn-block" @click="deleteKeep()" />
+            <div class="col p-0">K:{{keepData.keeps}}</div>
+            <div class="col p-0">S:{{keepData.shares}}</div>
+            <div class="col p-0">V:{{keepData.views}}</div>
+            <div v-if="this.$auth.isauthenticated">
+              <div
+                class="col-12"
+                v-if="keepData.userId == this.$auth.user.email || keepData.userId == this.$auth.user.sub"
+              >
+                <button class="btn btn-danger btn-block" @click="deleteKeep()">Delete Keep</button>
+              </div>
             </div>
           </div>
         </div>
@@ -68,7 +73,11 @@ export default {
   computed: {},
   methods: {
     deleteKeep() {
-      console.log("Delete ", keepData.id);
+      console.log("Delete ", this.keepData.id);
+      let confirm = window.confirm("Are you sure you want to delete this?");
+      if (confirm) {
+        console.log("Delorted");
+      }
     }
   },
   components: {}

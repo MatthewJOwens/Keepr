@@ -17,7 +17,7 @@
         <li
           class="nav-item"
           :class="{ active: $route.name == 'home' }"
-          v-if="$auth.user.name == null"
+          v-if="$auth.isAuthenticated == false"
         >
           <router-link :to="{ name: 'home' }" class="nav-link">Home</router-link>
         </li>
