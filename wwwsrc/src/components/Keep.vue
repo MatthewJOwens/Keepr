@@ -6,6 +6,9 @@
 // modal data-target="#modal-{{keepData.id}}", I think
 <template>
   <div class="keep card">
+    <!-- TODO On Hover (@mouseover, @mouseleave) save to vault dropdown -->
+    <!-- dropdown lists vaults and add new vault option -->
+    <!-- put in its own component with v-if="isAuthenticated"? -->
     <img
       class="card-img-top"
       :src="keepData.img"
@@ -50,7 +53,7 @@
             <div class="col p-0">K:{{keepData.keeps}}</div>
             <div class="col p-0">S:{{keepData.shares}}</div>
             <div class="col p-0">V:{{keepData.views}}</div>
-            <div v-if="this.$auth.isAuthenticated">
+            <div v-if="this.$auth.isAuthenticated && keepData.isPrivate == true">
               <div
                 class="col-12"
                 v-if="keepData.userId == this.$auth.user.email || keepData.userId == this.$auth.user.sub"
