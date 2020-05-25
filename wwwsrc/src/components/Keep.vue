@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="modal fade" :id="'modal-' + keepData.id" tabindex="-1" role="dialog">
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <img class="img-fluid" :src="keepData.img" :alt="keepData.name" />
@@ -41,7 +41,6 @@
           </div>
           <div class="modal-body text-center">
             <h3>{{keepData.name}}</h3>
-            <!-- v-if="keepData.description != null" -->
             <p class="card-text">{{keepData.description}}</p>
           </div>
           <div class="modal-footer row d-flex justify-content-around m-0 text-center">

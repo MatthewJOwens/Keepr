@@ -24,11 +24,37 @@
           <div class="modal-body">
             <!--TODO insert form -->
             <!-- name (req), description, img(req), isPrivate(req) -->
-            <h1>Form body</h1>
+            <!-- <h1>Form body</h1> -->
+            <form @submit.prevent="createKeep()">
+              <div class="form-group">
+                <label for="keepName">Post title:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="keepName"
+                  required
+                  v-model="newKeep.name"
+                />
+                <small class="form-text text-muted" id="nameHelp">Required</small>
+              </div>
+              <div class="form-group">
+                <label for="keepImg">Image URL:</label>
+                <input type="text" class="form-control" id="keepImg" required v-model="newKeep.img" />
+              </div>
+              <div class="form-check">
+                <input type="checkbox" id="isPublic" class="form-check-input" value="isPublic" />
+                <label for="isPublic" class="form-check-label">Check here to make it public</label>
+              </div>
+              <div class="form-group">
+                <label for="keepDescription">Post description:</label>
+                <textarea class="form-control" id="keepDescription" v-model="newKeep.description" />
+                <small class="form-text text-muted" id="descHelp">Also required</small>
+              </div>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary">Save</button>
           </div>
         </div>
       </div>
@@ -46,7 +72,13 @@ export default {
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    createKeep() {
+      this.newKeep.isPrivate = !event.target.isPublic;
+      this.$store.dispatch("createKeep", this.newKeep);
+      this.newKeep = {};
+    }
+  },
   components: {}
 };
 </script>

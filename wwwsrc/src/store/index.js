@@ -38,6 +38,14 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error)
       }
+    },
+    async createKeep({ commit, dispatch }, newKeep) {
+      let res = await api.post("keeps", newKeep)
+      if (newKeep.isPrivate == true) {
+        router.push({ name: "dashboard", params: {} })
+      } else {
+        dispatch("getPublic")
+      }
     }
   }
 });
