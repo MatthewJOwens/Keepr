@@ -27,7 +27,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getPublic");
+    this.$store.dispatch("getPublicKeeps");
   },
   methods: {
     logout() {

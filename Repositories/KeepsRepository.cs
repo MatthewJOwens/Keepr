@@ -25,6 +25,13 @@ namespace Keepr.Repositories
       string sql = "SELECT * FROM keeps WHERE id = @Id LIMIT 1";
       return _db.QueryFirstOrDefault<Keep>(sql, new { id });
     }
+
+    internal IEnumerable<Keep> GetByUser(string userId)
+    {
+      string sql = "SELECT * FROM keeps WHERE userId = @UserId";
+      return _db.Query<Keep>(sql, new { userId });
+    }
+
     internal Keep Create(Keep keepData)
     {
       keepData.Views = 0;

@@ -21,6 +21,10 @@ namespace Keepr.Services
     {
       return _repo.GetById(id);
     }
+    public IEnumerable<Keep> GetByUser(string userId)
+    {
+      return _repo.GetByUser(userId);
+    }
     public Keep Create(Keep newKeep)
     {
       return _repo.Create(newKeep);
@@ -39,5 +43,7 @@ namespace Keepr.Services
       }
       throw new Exception("Failed to delete");
     }
+
+
   }
 }

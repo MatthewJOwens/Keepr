@@ -17,11 +17,15 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    publicKeeps: []
+    publicKeeps: [],
+    userKeeps: [],
   },
   mutations: {
     setPublicKeeps(state, publicKeeps) {
       state.publicKeeps = publicKeeps
+    },
+    setUserKeeps(state, userKeeps) {
+      state.userKeeps = userKeeps
     }
   },
   actions: {
@@ -31,10 +35,19 @@ export default new Vuex.Store({
     resetBearer() {
       api.defaults.headers.authorization = "";
     },
-    async getPublic({ commit, dispatch }) {
+    async getPublicKeeps({ commit, dispatch }) {
       try {
         let res = await api.get("keeps")
         commit("setPublicKeeps", res.data)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getUserKeeps({ commit, dispatch }) {
+      try {
+        // breaks convention, best way?
+        let res = await api.get("keeps/user")
+        commit("setUserKeeps", res.data)
       } catch (error) {
         console.error(error)
       }
@@ -45,7 +58,7 @@ export default new Vuex.Store({
         if (newKeep.isPrivate == true) {
           router.push({ name: "dashboard", params: {} })
         } else {
-          dispatch("getPublic")
+          dispatch("getPublicKeeps")
         }
       } catch (error) {
         console.error(error)

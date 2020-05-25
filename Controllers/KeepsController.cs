@@ -33,14 +33,38 @@ namespace Keepr.Controllers
       };
     }
 
+    [HttpGet("user")]
+    [Authorize]
+    public ActionResult<IEnumerable<Keep>> GetByUser()
+    {
+      try
+      {
+        Claim user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+        if (user == null)
+        {
+          throw new Exception("You must be logged in to access.");
+        }
+        string userId = user.Value;
+        return Ok(_ks.GetByUser(userId));
+      }
+      catch (System.Exception err)
+      {
+        return BadRequest(err.Message);
+      }
+    }
+
     [HttpPost]
     [Authorize]
     public ActionResult<Keep> Post([FromBody] Keep newKeep)
     {
       try
       {
-        var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        newKeep.UserId = userId;
+        Claim userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userId == null)
+        {
+          throw new Exception("You must be logged in to access.");
+        }
+        newKeep.UserId = userId.Value;
         return Ok(_ks.Create(newKeep));
       }
       catch (Exception e)

@@ -10,7 +10,7 @@
           >Keep component not loaded.</Keep>
         </div>
       </div>
-      <div class="col-1 d-flex justify-content-end align-items-end">
+      <div class="col-1 d-flex justify-content-end align-items-start">
         <CreateKeep />
       </div>
     </div>
@@ -32,7 +32,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getPublic");
+    this.$store.dispatch("getPublicKeeps");
   },
   methods: {},
   components: { Keep, CreateKeep }
