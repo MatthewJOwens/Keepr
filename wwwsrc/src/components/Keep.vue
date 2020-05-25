@@ -17,10 +17,12 @@
       <h5 class="card-title">{{keepData.name}}</h5>
     </div>
     <div class="card-footer row d-flex justify-content-around m-0">
+      <!-- TODO highlight on hover -->
       <div class="col p-0">
         <i class="fab fa-korvue"></i>
         {{keepData.keeps}}
       </div>
+      <!-- TODO bring up share menu? -->
       <div class="col p-0">
         <i class="fas fa-share"></i>
         {{keepData.shares}}
@@ -44,14 +46,17 @@
             <p class="card-text">{{keepData.description}}</p>
           </div>
           <div class="modal-footer row d-flex justify-content-around m-0 text-center">
+            <!-- TODO maybe replace these with FA icons? -->
             <div class="col p-0">K:{{keepData.keeps}}</div>
             <div class="col p-0">S:{{keepData.shares}}</div>
             <div class="col p-0">V:{{keepData.views}}</div>
-            <div
-              class="col-12"
-              v-if="keepData.userId == this.$auth.user.email || keepData.userId == this.$auth.user.sub"
-            >
-              <button class="btn btn-danger btn-block" @click="deleteKeep()">Delete Keep</button>
+            <div v-if="this.$auth.isAuthenticated">
+              <div
+                class="col-12"
+                v-if="keepData.userId == this.$auth.user.email || keepData.userId == this.$auth.user.sub"
+              >
+                <button class="btn btn-danger btn-block" @click="deleteKeep()">Delete Keep</button>
+              </div>
             </div>
           </div>
         </div>
