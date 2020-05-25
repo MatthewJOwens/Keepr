@@ -57,7 +57,7 @@
                 <textarea class="form-control" id="keepDescription" v-model="newKeep.description" />
                 <small class="form-text text-muted" id="descHelp">Also required</small>
               </div>
-              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="submit" class="btn btn-primary" data-dismiss="modal">Save</button>
             </form>
           </div>
           <div class="modal-footer">
