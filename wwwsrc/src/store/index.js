@@ -56,7 +56,10 @@ export default new Vuex.Store({
       try {
         let res = await api.post("keeps", newKeep)
         if (newKeep.isPrivate == true) {
-          router.push({ name: "dashboard", params: {} })
+          if (newKeep.fromRoute != 'dashboard') {
+            router.push({ name: "dashboard", params: {} })
+          }
+          dispatch("getUserKeeps")
         } else {
           dispatch("getPublicKeeps")
         }
@@ -76,6 +79,14 @@ export default new Vuex.Store({
         } else if (keepToDelete.isPrivate == true) {
           router.push({ name: "dashboard", params: {} })
         }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async editKeep({ commit, dispatch }, keepToEdit) {
+      try {
+        let res = api.put("keeps/" + keepToEdit.id, keepToEdit)
+        // need to do anything else? do something with the results?
       } catch (error) {
         console.error(error)
       }

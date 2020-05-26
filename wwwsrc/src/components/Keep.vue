@@ -15,8 +15,14 @@
       :alt="keepData.name"
       data-toggle="modal"
       :data-target="'#modal-' + keepData.id"
+      @click="upViewCount()"
     />
-    <div class="card-body" data-toggle="modal" :data-target="'#modal-' + keepData.id">
+    <div
+      class="card-body"
+      data-toggle="modal"
+      :data-target="'#modal-' + keepData.id"
+      @click="upViewCount()"
+    >
       <h5 class="card-title">{{keepData.name}}</h5>
     </div>
     <div class="card-footer row d-flex justify-content-around m-0">
@@ -50,12 +56,11 @@
           </div>
           <div class="modal-footer row d-flex justify-content-around m-0 text-center">
             <!-- TODO maybe replace these with FA icons? -->
-            <div class="col p-0">K:{{keepData.keeps}}</div>
-            <div class="col p-0">S:{{keepData.shares}}</div>
-            <div class="col p-0">V:{{keepData.views}}</div>
-            <div v-if="this.$auth.isAuthenticated && keepData.isPrivate == true">
+            <div class="col p-0">Kept:{{keepData.keeps}}</div>
+            <div class="col p-0">Shared:{{keepData.shares}}</div>
+            <div class="col p-0">Viewed:{{keepData.views}}</div>
+            <div class="col-12" v-if="this.$auth.isAuthenticated && keepData.isPrivate == true">
               <div
-                class="col-12"
                 v-if="keepData.userId == this.$auth.user.email || keepData.userId == this.$auth.user.sub"
               >
                 <button class="btn btn-danger btn-block" @click="deleteKeep()">Delete Keep</button>
@@ -85,6 +90,18 @@ export default {
         console.log("Delorted");
         this.$store.dispatch("deleteKeep", this.keepData);
       }
+    },
+    upViewCount() {
+      this.keepData.views++;
+      this.$store.dispatch("editKeep", this.keepData);
+    },
+    upKeptCount() {
+      this.keepData.keeps++;
+      this.$store.dispatch("editKeep", this.keepData);
+    },
+    upShareCount() {
+      this.keepData.shares++;
+      this.$store.dispatch("editKeep", this.keepData);
     }
   },
   components: {}

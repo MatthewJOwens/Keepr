@@ -93,5 +93,18 @@ namespace Keepr.Controllers
       }
     }
 
+    [HttpPut("{id}")]
+    public ActionResult<Keep> Edit(int id, [FromBody] Keep keepToUpdate)
+    {
+      keepToUpdate.Id = id;
+      try
+      {
+        return Ok(_ks.Edit(keepToUpdate));
+      }
+      catch (System.Exception err)
+      {
+        return BadRequest(err.Message);
+      }
+    }
   }
 }

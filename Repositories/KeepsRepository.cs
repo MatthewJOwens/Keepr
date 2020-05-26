@@ -46,6 +46,16 @@ namespace Keepr.Repositories
       return keepData;
     }
 
+    internal bool UpdateViewCount(Keep keepToUpdate)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET views = views + 1
+      WHERE id = @Id";
+      int affectedRows = _db.Execute(sql, keepToUpdate);
+      return affectedRows == 1;
+    }
+
     internal bool Delete(int id, string userId)
     {
       string sql = "DELETE FROM keeps WHERE id = @id AND userId = @userId";

@@ -22,8 +22,8 @@ import CreateKeep from "../components/CreateKeep.vue";
 import Keep from "../components/Keep.vue";
 export default {
   name: "dashboard",
-  data: {
-    return: {}
+  data() {
+    return {};
   },
   mounted() {
     this.$store.dispatch("getUserKeeps");

@@ -44,6 +44,21 @@ namespace Keepr.Services
       throw new Exception("Failed to delete");
     }
 
-
+    public Keep Edit(Keep keepToUpdate)
+    {
+      Keep foundKeep = GetById(keepToUpdate.Id);
+      // route for Views
+      if (foundKeep != null)
+      {
+        foundKeep.Views++;
+        if (_repo.UpdateViewCount(foundKeep))
+        {
+          return foundKeep;
+        }
+      }
+      // route for Kept
+      // route for Shares
+      throw new Exception("Unable to edit.");
+    }
   }
 }

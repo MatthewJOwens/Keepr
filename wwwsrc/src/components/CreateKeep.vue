@@ -57,7 +57,7 @@
                 <textarea class="form-control" id="keepDescription" v-model="newKeep.description" />
                 <small class="form-text text-muted" id="descHelp">Also required</small>
               </div>
-              <button type="submit" class="btn btn-primary" data-dismiss="modal">Save</button>
+              <button type="submit" class="btn btn-primary">Save</button>
             </form>
           </div>
           <div class="modal-footer">
@@ -84,8 +84,10 @@ export default {
   methods: {
     createKeep() {
       // this.newKeep.isPrivate = !event.target.isPublic;
+      this.newKeep.fromRoute = this.$route.name;
       this.$store.dispatch("createKeep", this.newKeep);
       this.newKeep = {};
+      $("#createKeepModal").modal("hide");
     }
   },
   components: {}
