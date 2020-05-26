@@ -5,7 +5,12 @@
 // image, name, and description on modal
 // modal data-target="#modal-{{keepData.id}}", I think
 <template>
-  <div class="keep card">
+  <div class="keep card" @mouseenter="showOverlay = true" @mouseleave="showOverlay = false">
+    <div class="position-absolute text-white" style="top: 0" v-if="showOverlay">
+      <div class="dropdown">
+        <VaultSaveDropdown :keepData="keepData" :vaults="vaults" />
+      </div>
+    </div>
     <!-- TODO On Hover (@mouseover, @mouseleave) save to vault dropdown -->
     <!-- dropdown lists vaults and add new vault option -->
     <!-- put in its own component with v-if="isAuthenticated"? -->
@@ -75,11 +80,14 @@
 
 
 <script>
+import VaultSaveDropdown from "./VaultSaveDropdown.vue";
 export default {
   name: "keep",
-  props: ["keepData"],
+  props: ["keepData", "vaults"],
   data() {
-    return {};
+    return {
+      showOverlay: false
+    };
   },
   computed: {},
   methods: {
@@ -104,7 +112,7 @@ export default {
       this.$store.dispatch("editKeep", this.keepData);
     }
   },
-  components: {}
+  components: { VaultSaveDropdown }
 };
 </script>
 

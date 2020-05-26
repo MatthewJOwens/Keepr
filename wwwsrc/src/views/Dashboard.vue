@@ -10,7 +10,7 @@
           <Keep v-for="keep in userKeeps" :key="keep.id" :keepData="keep" />
         </div>
       </div>
-      <div class="col-1 d-flex justify-content-end align-items-start">
+      <div class="col-1 p-0 d-flex justify-content-end align-items-start">
         <CreateKeep />
       </div>
     </div>
@@ -27,6 +27,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getUserKeeps");
+    this.$store.dispatch("getUserVaults");
   },
   computed: {
     userKeeps() {

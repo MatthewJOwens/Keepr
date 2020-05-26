@@ -10,7 +10,7 @@
           >Keep component not loaded.</Keep>
         </div>
       </div>
-      <div class="col-1 d-flex justify-content-end align-items-start">
+      <div class="col-1 p-0 d-flex justify-content-end align-items-start">
         <CreateKeep />
       </div>
     </div>

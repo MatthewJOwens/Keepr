@@ -19,6 +19,7 @@ export default new Vuex.Store({
   state: {
     publicKeeps: [],
     userKeeps: [],
+    userVaults: []
   },
   mutations: {
     setPublicKeeps(state, publicKeeps) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     setUserKeeps(state, userKeeps) {
       state.userKeeps = userKeeps
+    },
+    setUserVaults(state, userVaults) {
+      state.userVaults = userVaults
     }
   },
   actions: {
@@ -87,6 +91,14 @@ export default new Vuex.Store({
       try {
         let res = api.put("keeps/" + keepToEdit.id, keepToEdit)
         // need to do anything else? do something with the results?
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async getUserVaults({ commit, dispatch }) {
+      try {
+        let res = await api.get("vaults/")
+        commit('setUserVaults', res.data)
       } catch (error) {
         console.error(error)
       }
