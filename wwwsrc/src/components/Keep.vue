@@ -7,7 +7,7 @@
 <template>
   <div class="keep card" @mouseenter="showOverlay = true" @mouseleave="showOverlay = false">
     <div class="position-absolute text-white" style="top: 0" v-if="showOverlay">
-      <div class="dropdown">
+      <div class="btn-group dropdown">
         <VaultSaveDropdown :keepData="keepData" :vaults="vaults" />
       </div>
     </div>
@@ -50,7 +50,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <img class="img-fluid" :src="keepData.img" :alt="keepData.name" />
+            <img class="img-fluid" :src="keepData.img" :alt="keepData.name" data-dismiss="modal" />
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -64,6 +64,15 @@
             <div class="col p-0">Kept:{{keepData.keeps}}</div>
             <div class="col p-0">Shared:{{keepData.shares}}</div>
             <div class="col p-0">Viewed:{{keepData.views}}</div>
+            <div class="col-12" v-if="this.$auth.isAuthenticated">
+              <button
+                type="button"
+                class="btn btn-block btn-info"
+                data-dismiss="modal"
+                data-toggle="modal"
+                :data-target="'#toVaultModal-' + keepData.id"
+              >Keep in a vault?</button>
+            </div>
             <div class="col-12" v-if="this.$auth.isAuthenticated && keepData.isPrivate == true">
               <div
                 v-if="keepData.userId == this.$auth.user.email || keepData.userId == this.$auth.user.sub"
@@ -71,6 +80,38 @@
                 <button class="btn btn-danger btn-block" @click="deleteKeep()">Delete Keep</button>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" :id="'toVaultModal-' + keepData.id" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header justify-content-center">
+            <img
+              class="img-fluid"
+              style="max-height: 50vh"
+              :src="keepData.img"
+              :alt="keepData.name"
+            />
+          </div>
+          <div class="modal-body">
+            <form @submit.prevent="createVaultAndSave()">
+              <div class="form-group">
+                <label for="vaultModalName">Name of the vault</label>
+                <input type="text" class="form-control" id="vaultModalName" v-model="newVault.name" />
+              </div>
+              <div class="form-group">
+                <label for="vaultModalDesc">Vault Description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="vaultModalDesc"
+                  v-model="newVault.description"
+                />
+              </div>
+              <button class="btn btn-info" type="submit">Create & Save</button>
+            </form>
           </div>
         </div>
       </div>
@@ -86,7 +127,8 @@ export default {
   props: ["keepData", "vaults"],
   data() {
     return {
-      showOverlay: false
+      showOverlay: false,
+      newVault: {}
     };
   },
   computed: {},
@@ -110,6 +152,14 @@ export default {
     upShareCount() {
       this.keepData.shares++;
       this.$store.dispatch("editKeep", this.keepData);
+    },
+    createVaultAndSave() {
+      console.log(
+        "Creating vault " +
+          this.newVault.name +
+          " and saving Keep " +
+          this.keepData.id
+      );
     }
   },
   components: { VaultSaveDropdown }
