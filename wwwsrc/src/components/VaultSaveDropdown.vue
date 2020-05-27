@@ -39,7 +39,7 @@ export default {
   props: ["keepData"],
   computed: {
     vaults() {
-      return this.$store.state.vaults;
+      return this.$store.state.userVaults;
     }
   },
   methods: {

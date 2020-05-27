@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col-10 offset-1">
           <div class="card-columns my-2">
-            <Keep v-for="keep in userKeeps" :key="keep.id" :keepData="keep" />
+            <Keep v-for="keep in userKeeps" :key="keep.id" :keepData="keep" :vaults="userVaults" />
           </div>
         </div>
         <div class="col-1 p-0 d-flex justify-content-end align-items-start">

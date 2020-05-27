@@ -6,11 +6,11 @@
 // modal data-target="#modal-{{keepData.id}}", I think
 <template>
   <div class="keep card" @mouseenter="showOverlay = true" @mouseleave="showOverlay = false">
-    <div class="position-absolute text-white" style="top: 0" v-if="showOverlay">
+    <!-- <div class="position-absolute text-white" style="top: 0" v-if="showOverlay">
       <div class="btn-group dropdown">
         <VaultSaveDropdown :keepData="keepData" :vaults="vaults" />
       </div>
-    </div>
+    </div>-->
     <!-- TODO On Hover (@mouseover, @mouseleave) save to vault dropdown -->
     <!-- dropdown lists vaults and add new vault option -->
     <!-- put in its own component with v-if="isAuthenticated"? -->
@@ -33,16 +33,25 @@
     <div class="card-footer row d-flex justify-content-around m-0">
       <!-- TODO highlight on hover -->
       <div class="col p-0">
-        <i class="fab fa-korvue"></i>
+        <i
+          class="fab fa-korvue hover"
+          data-toggle="modal"
+          :data-target="'#toVaultModal-' + keepData.id"
+        ></i>
         {{keepData.keeps}}
       </div>
       <!-- TODO bring up share menu? -->
       <div class="col p-0">
-        <i class="fas fa-share"></i>
+        <i class="fas fa-share hover"></i>
         {{keepData.shares}}
       </div>
       <div class="col p-0">
-        <i class="far fa-eye"></i>
+        <i
+          class="far fa-eye hover"
+          data-toggle="modal"
+          :data-target="'#modal-' + keepData.id"
+          @click="upViewCount()"
+        ></i>
         {{keepData.views}}
       </div>
     </div>
@@ -96,22 +105,59 @@
             />
           </div>
           <div class="modal-body">
-            <form @submit.prevent="createVaultAndSave()">
-              <div class="form-group">
-                <label for="vaultModalName">Name of the vault</label>
-                <input type="text" class="form-control" id="vaultModalName" v-model="newVault.name" />
+            <div class="row">
+              <div class="col-6">
+                Save to an existing vault...
+                <form @submit.prevent="saveToVault()">
+                  <div class="input-group">
+                    <select
+                      class="custom-select"
+                      name="vaultSelection"
+                      id="vaultSelect"
+                      aria-label="Vault selection"
+                    >
+                      <option selected>Choose...</option>
+                      <option
+                        v-for="vault in vaults"
+                        :key="'option'+vault.id"
+                        :value="vault.id"
+                      >{{vault.name}}</option>
+                    </select>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-info" type="submit" data-dismiss="modal">Save</button>
+                    </div>
+                  </div>
+                </form>
               </div>
-              <div class="form-group">
-                <label for="vaultModalDesc">Vault Description</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="vaultModalDesc"
-                  v-model="newVault.description"
-                />
+              <div class="col-6 border-left border-secondary">
+                ...or create a new one.
+                <form @submit.prevent="createVaultAndSave()">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      :id="'vaultModalName'+ keepData.id"
+                      v-model="newVault.name"
+                      placeholder="Vault Name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      :id="'vaultModalDesc'+ keepData.id"
+                      v-model="newVault.description"
+                      placeholder="Vault Description"
+                    />
+                  </div>
+                  <button
+                    class="btn btn-outline-info"
+                    type="submit"
+                    data-dismiss="modal"
+                  >Create & Save</button>
+                </form>
               </div>
-              <button class="btn btn-info" type="submit">Create & Save</button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -160,6 +206,16 @@ export default {
           " and saving Keep " +
           this.keepData.id
       );
+      // TODO create vault
+      // TODO save to vault
+      // TODO Keep count ++
+      // TODO update keep with keep count
+    },
+    saveToVault() {
+      console.log(event.target.vaultSelection.value);
+      // TODO save to vault
+      // TODO Keep count ++
+      // TODO update keep with keep count
     }
   },
   components: { VaultSaveDropdown }
@@ -168,4 +224,7 @@ export default {
 
 
 <style scoped>
+.hover:hover {
+  color: red !important;
+}
 </style>
