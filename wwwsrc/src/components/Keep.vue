@@ -161,7 +161,7 @@
   </div>
 </template>
 
-
+//TODO only show vault options if logged in
 <script>
 import VaultSaveDropdown from "./VaultSaveDropdown.vue";
 export default {
@@ -217,7 +217,7 @@ export default {
     saveToVault() {
       console.log(event.target.vaultSelection.value);
       //save variables to vaultkeep
-      this.vaultKeep.vaultId = event.target.vaultSelection.value;
+      this.vaultKeep.vaultId = parseInt(event.target.vaultSelection.value);
       this.vaultKeep.keepId = this.keepData.id;
       //  save to vault
       this.$store.dispatch("saveToVault", this.vaultKeep);
