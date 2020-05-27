@@ -74,7 +74,8 @@ export default {
   name: "to-vault-modal-comp",
   data() {
     return {
-      newVault: {}
+      newVault: {},
+      vaultKeep: {}
     };
   },
   props: ["keepData", "vaults"],

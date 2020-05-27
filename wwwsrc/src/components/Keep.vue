@@ -108,8 +108,7 @@ export default {
   props: ["keepData", "vaults"],
   data() {
     return {
-      showOverlay: false,
-      vaultKeep: {}
+      showOverlay: false
     };
   },
   computed: {

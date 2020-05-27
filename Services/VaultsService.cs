@@ -25,5 +25,28 @@ namespace Keepr.Services
       }
       return _repo.Create(newVault);
     }
+
+    internal string Delete(int id, string userId)
+    {
+      Vault foundVault = GetById(id);
+      if (foundVault == null)
+      {
+        throw new Exception("Unknown vault ID");
+      }
+      if (foundVault.UserId != userId)
+      {
+        throw new Exception("Not your vault!");
+      }
+      if (_repo.Delete(id, userId))
+      {
+        return "Successfully deleted vault.";
+      }
+      throw new Exception("Failed to delete vault.");
+    }
+
+    internal Vault GetById(int id)
+    {
+      return _repo.GetById(id);
+    }
   }
 }

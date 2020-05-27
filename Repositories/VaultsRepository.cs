@@ -30,5 +30,19 @@ namespace Keepr.Repositories
       newVault.Id = _db.ExecuteScalar<int>(sql, newVault);
       return newVault;
     }
+    // TODO write a delete function
+
+    internal bool Delete(int vaultId, string userId)
+    {
+      string sql = @"DELETE FROM vaults WHERE id = @VaultId AND userId = @UserId LIMIT 1";
+      int affectedRows = _db.Execute(sql, new { vaultId, userId });
+      return affectedRows == 1;
+    }
+
+    internal Vault GetById(int id)
+    {
+      string sql = "SELECT * FROM keeps WHERE id = @Id LIMIT 1";
+      return _db.QueryFirstOrDefault<Vault>(sql, new { id });
+    }
   }
 }
