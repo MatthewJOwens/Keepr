@@ -7,6 +7,7 @@
             v-for="keep in publicKeeps"
             :keepData="keep"
             :key="keep.id"
+            :vaults="userVaults"
           >Keep component not loaded.</Keep>
         </div>
       </div>
@@ -29,10 +30,14 @@ export default {
   computed: {
     publicKeeps() {
       return this.$store.state.publicKeeps;
+    },
+    userVaults() {
+      return this.$store.state.userVaults;
     }
   },
   mounted() {
     this.$store.dispatch("getPublicKeeps");
+    this.$store.dispatch("getUserVaults");
   },
   methods: {},
   components: { Keep, CreateKeep }

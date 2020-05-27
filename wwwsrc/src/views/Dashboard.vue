@@ -2,14 +2,30 @@
   <div class="dashboard container-fluid">
     <h1>WELCOME TO YOUR DASHBOARD</h1>
     <!-- <h4>public: {{ publicKeeps }} user: {{ userKeeps }}</h4> -->
-    <button class="btn btn-sm btn-secondary" type="button" @click="toggleVaultsKeeps()">
-      <span v-if="showKeeps">Vaults</span>
-      <span v-if="showVaults">Keeps</span>
+    <button class="btn btn-sm btn-primary" type="button" @click="vaultsView()" v-if="!showVaults">
+      <span>Vaults</span>
+    </button>
+    <button class="btn btn-sm btn-primary" type="button" @click="keepsView()" v-if="!showKeeps">
+      <span>Keeps</span>
     </button>
     <div v-show="showVaults">
       {{$auth.user.name}}'s Vaults:
       <div class="row">
-        <div class="col-10 offset-1">{{userVaults}}</div>
+        <div class="col-10 offset-1">
+          <div class="card-columns">
+            <div
+              class="card border-primary mb-3"
+              v-for="vault in userVaults"
+              :key="vault.id"
+              @click="chooseVault(vault)"
+            >
+              <div class="card-body text-primary">
+                <h5 class="card-title">{{vault.name}}</h5>
+                <p class="card-text">{{vault.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div v-show="showKeeps">
@@ -36,8 +52,8 @@ export default {
   name: "dashboard",
   data() {
     return {
-      showKeeps: true,
-      showVaults: false
+      showKeeps: false,
+      showVaults: true
     };
   },
   mounted() {
@@ -50,12 +66,25 @@ export default {
     },
     userVaults() {
       return this.$store.state.userVaults;
+    },
+    vaultKeeps() {
+      return this.$store.state.vaultKeeps;
     }
   },
   methods: {
-    toggleVaultsKeeps() {
-      this.showKeeps = !this.showKeeps;
-      this.showVaults = !this.showVaults;
+    keepsView() {
+      this.showVaults = false;
+      this.showKeeps = true;
+    },
+    vaultsView() {
+      this.showKeeps = false;
+      this.showVaults = true;
+    },
+    chooseVault(vault) {
+      console.log(vault.name);
+      this.$store.dispatch("getVaultKeeps", vault.id);
+      this.showVaults = false;
+      this.$router.push("vaults/" + vault.id);
     }
   },
   components: { Keep, CreateKeep }

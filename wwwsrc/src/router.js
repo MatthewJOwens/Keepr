@@ -28,6 +28,13 @@ export default new Router({
       name: "mainVue",
       component: MainVue,
       beforeEnter: authGuard
+    },
+    {
+      path: "/vaults/:id",
+      name: "vault",
+      // @ts-ignore
+      component: () => import(/*webpackChunkName: "vault" */ './views/Vault.vue'),
+      beforeEnter: authGuard
     }
   ]
 });

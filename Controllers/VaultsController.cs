@@ -62,7 +62,7 @@ namespace Keepr.Controllers
 
     [HttpGet("{id}/keeps")]
     [Authorize]
-    public ActionResult<IEnumerable<Keep>> GetKeepsByVaultId(int vaultId)
+    public ActionResult<IEnumerable<Keep>> GetKeepsByVaultId(int id)
     {
       try
       {
@@ -72,7 +72,7 @@ namespace Keepr.Controllers
           throw new Exception("You must be logged in to get vaulted keeps.");
         }
         string userId = user.Value;
-        return Ok(_ks.GetKeepsByVaultId(vaultId, userId));
+        return Ok(_ks.GetKeepsByVaultId(id, userId));
       }
       catch (System.Exception err)
       {
