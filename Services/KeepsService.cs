@@ -50,15 +50,33 @@ namespace Keepr.Services
       // route for Views
       if (foundKeep != null)
       {
-        foundKeep.Views++;
-        if (_repo.UpdateViewCount(foundKeep))
+        if (foundKeep.Views < keepToUpdate.Views)
         {
+
+          if (_repo.UpdateViewCount(foundKeep))
+          {
+            return foundKeep;
+          }
           return foundKeep;
         }
+        // route for Kept
+        if (foundKeep.Keeps < keepToUpdate.Keeps)
+        {
+
+          if (_repo.UpdateKeptCount(foundKeep))
+          {
+            return foundKeep;
+          }
+          return foundKeep;
+        }
+        // route for Shares
       }
-      // route for Kept
-      // route for Shares
       throw new Exception("Unable to edit.");
+    }
+
+    public IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
+    {
+      return _repo.GetKeepsByVaultId(vaultId, userId);
     }
   }
 }

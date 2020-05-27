@@ -124,7 +124,7 @@
                       >{{vault.name}}</option>
                     </select>
                     <div class="input-group-append">
-                      <button class="btn btn-outline-info" type="submit" data-dismiss="modal">Save</button>
+                      <button class="btn btn-outline-info" type="submit">Save</button>
                     </div>
                   </div>
                 </form>
@@ -150,11 +150,7 @@
                       placeholder="Vault Description"
                     />
                   </div>
-                  <button
-                    class="btn btn-outline-info"
-                    type="submit"
-                    data-dismiss="modal"
-                  >Create & Save</button>
+                  <button class="btn btn-outline-info" type="submit">Create & Save</button>
                 </form>
               </div>
             </div>
@@ -174,7 +170,8 @@ export default {
   data() {
     return {
       showOverlay: false,
-      newVault: {}
+      newVault: {},
+      vaultKeep: {}
     };
   },
   computed: {},
@@ -206,16 +203,27 @@ export default {
           " and saving Keep " +
           this.keepData.id
       );
-      // TODO create vault
-      // TODO save to vault
-      // TODO Keep count ++
-      // TODO update keep with keep count
+      //save the various variables to vaultkeep
+      this.vaultKeep.name = this.newVault.name;
+      this.vaultKeep.description = this.newVault.description;
+      this.vaultKeep.keepId = this.keepData.id;
+      // need this.vaultKeep.vaultId but have to get that from the return from the first request
+      //  create and save to vault
+      this.$store.dispatch("createVaultAndSave", this.vaultKeep);
+      //  Keep count ++
+      this.upKeptCount();
+      $("#createKeepModal").modal("hide");
     },
     saveToVault() {
       console.log(event.target.vaultSelection.value);
-      // TODO save to vault
-      // TODO Keep count ++
-      // TODO update keep with keep count
+      //save variables to vaultkeep
+      this.vaultKeep.vaultId = event.target.vaultSelection.value;
+      this.vaultKeep.keepId = this.keepData.id;
+      //  save to vault
+      this.$store.dispatch("saveToVault", this.vaultKeep);
+      //  Keep count ++
+      this.upKeptCount();
+      $("#toVaultModal-" + this.keepData.id).modal("hide");
     }
   },
   components: { VaultSaveDropdown }

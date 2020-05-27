@@ -55,6 +55,27 @@ namespace Keepr.Repositories
       int affectedRows = _db.Execute(sql, keepToUpdate);
       return affectedRows == 1;
     }
+    internal bool UpdateKeptCount(Keep keepToUpdate)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET keeps = keeps + 1
+      WHERE id = @Id";
+      int affectedRows = _db.Execute(sql, keepToUpdate);
+      return affectedRows == 1;
+    }
+
+    internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
+    {
+      string sql = @"
+        SELECT 
+        k.*,
+        vk.id as vaultKeepId
+        FROM vaultkeeps vk
+        INNER JOIN keeps k ON k.id = vk.keepId 
+        WHERE (vaultId = @VaultId AND vk.userId = @UserId)";
+      return _db.Query<Keep>(sql, new { vaultId, userId });
+    }
 
     internal bool Delete(int id, string userId)
     {
