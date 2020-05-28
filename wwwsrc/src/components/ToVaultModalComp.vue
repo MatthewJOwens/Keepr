@@ -23,7 +23,6 @@
                       id="vaultSelect"
                       aria-label="Vault selection"
                     >
-                      <option selected>Choose...</option>
                       <option
                         v-for="vault in vaults"
                         :key="'option'+vault.id"
@@ -46,6 +45,7 @@
                       :id="'vaultModalName'+ keepData.id"
                       v-model="newVault.name"
                       placeholder="Vault Name"
+                      required
                     />
                   </div>
                   <div class="form-group">
@@ -102,7 +102,7 @@ export default {
       this.$store.dispatch("createVaultAndSave", this.vaultKeep);
       //  Keep count ++
       this.upKeptCount();
-      $("#createKeepModal").modal("hide");
+      $("#toVaultModal-" + this.keepData.id).modal("hide");
     },
     saveToVault() {
       console.log(event.target.vaultSelection.value);

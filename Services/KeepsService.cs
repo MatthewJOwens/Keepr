@@ -74,7 +74,7 @@ namespace Keepr.Services
       throw new Exception("Unable to edit.");
     }
 
-    public IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
+    public IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int vaultId, string userId)
     {
       return _repo.GetKeepsByVaultId(vaultId, userId);
     }

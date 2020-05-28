@@ -32,7 +32,7 @@
     </div>
     <div class="card-footer row d-flex justify-content-around m-0">
       <!-- TODO highlight on hover -->
-      <div class="col p-0">
+      <div class="col-4 p-0">
         <i
           class="fab fa-korvue"
           :class="{hover: !isHome}"
@@ -42,11 +42,11 @@
         {{keepData.keeps}}
       </div>
       <!-- TODO bring up share menu? -->
-      <div class="col p-0">
+      <div class="col-4 p-0">
         <i class="fas fa-share hover"></i>
         {{keepData.shares}}
       </div>
-      <div class="col p-0">
+      <div class="col-4 p-0">
         <i
           class="far fa-eye hover"
           data-toggle="modal"
@@ -54,6 +54,11 @@
           @click="upViewCount()"
         ></i>
         {{keepData.views}}
+      </div>
+      <div v-if="isVault" class="col-12">
+        <button class="btn btn-warning btn-block btn-sm" @click="removeFromVault()">
+          <small>Remove from Vault</small>
+        </button>
       </div>
     </div>
     <div class="modal fade" :id="'modal-' + keepData.id" tabindex="-1" role="dialog">
@@ -114,6 +119,9 @@ export default {
   computed: {
     isHome() {
       return this.$route.name == "home";
+    },
+    isVault() {
+      return this.$route.name == "vault";
     }
   },
   methods: {
@@ -124,6 +132,7 @@ export default {
         console.log("Delorted");
         this.$store.dispatch("deleteKeep", this.keepData);
       }
+      $("#modal-" + this.keepData.id).modal("hide");
     },
     upViewCount() {
       this.keepData.views++;
@@ -133,6 +142,13 @@ export default {
     upShareCount() {
       this.keepData.shares++;
       this.$store.dispatch("editKeep", this.keepData);
+    },
+
+    removeFromVault() {
+      let tempVK = this.keepData;
+      tempVK.vaultId = parseInt(this.$route.params.id);
+      console.log(tempVK);
+      this.$store.dispatch("removeFromVault", this.keepData);
     }
   },
   components: { VaultSaveDropdown, ToVaultModalComp }

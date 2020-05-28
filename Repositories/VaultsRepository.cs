@@ -41,7 +41,7 @@ namespace Keepr.Repositories
 
     internal Vault GetById(int id)
     {
-      string sql = "SELECT * FROM keeps WHERE id = @Id LIMIT 1";
+      string sql = "SELECT * FROM vaults WHERE id = @Id LIMIT 1";
       return _db.QueryFirstOrDefault<Vault>(sql, new { id });
     }
   }

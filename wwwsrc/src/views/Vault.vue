@@ -1,7 +1,16 @@
 <template>
   <div class="vault container-fluid">
-    <div class="row">
-      <div class="col-10 offset-1">
+    <div class="row mt-3">
+      <div class="col-1">
+        <button
+          type="button"
+          class="rounded-circle btn btn-danger text-light shadow-sm border-0 m-2"
+          @click="deleteVault()"
+        >
+          <i class="far fa-trash-alt"></i>
+        </button>
+      </div>
+      <div class="col-10">
         <div class="card-columns">
           <Keep v-for="keep in vaultKeeps" :key="keep.id" :keepData="keep" :vaults="userVaults" />
         </div>
@@ -30,7 +39,16 @@ export default {
       return this.$store.state.vaultKeeps;
     }
   },
-  methods: {},
+  methods: {
+    deleteVault() {
+      let confirm = window.confirm(
+        "Are you sure you wish to delete this vault? \nThis cannot be undone."
+      );
+      if (confirm) {
+        this.$store.dispatch("deleteVault", this.$route.params.id);
+      }
+    }
+  },
   components: { Keep }
 };
 </script>

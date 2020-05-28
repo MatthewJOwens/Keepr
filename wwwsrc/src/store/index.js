@@ -151,6 +151,22 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error)
       }
+    },
+    async removeFromVault({ commit, dispatch }, vk) {
+      try {
+        await api.delete("vaultKeeps/" + vk.vaultKeepId)
+        dispatch("getVaultKeeps", vk.vaultId)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    async deleteVault({ commit, dispatch }, id) {
+      try {
+        await api.delete("vaults/" + id)
+        router.push({ name: "dashboard" })
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 });

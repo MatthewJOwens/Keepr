@@ -62,7 +62,7 @@ namespace Keepr.Controllers
 
     [HttpGet("{id}/keeps")]
     [Authorize]
-    public ActionResult<IEnumerable<Keep>> GetKeepsByVaultId(int id)
+    public ActionResult<IEnumerable<VaultKeepViewModel>> GetKeepsByVaultId(int id)
     {
       try
       {
@@ -92,7 +92,7 @@ namespace Keepr.Controllers
           throw new Exception("You must be logged in to delete a vault.");
         }
         string userId = user.Value;
-        return Ok(_ks.Delete(id, userId));
+        return Ok(_vs.Delete(id, userId));
       }
       catch (System.Exception err)
       {

@@ -65,7 +65,7 @@ namespace Keepr.Repositories
       return affectedRows == 1;
     }
 
-    internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId, string userId)
+    internal IEnumerable<VaultKeepViewModel> GetKeepsByVaultId(int vaultId, string userId)
     {
       string sql = @"
         SELECT 
@@ -74,7 +74,7 @@ namespace Keepr.Repositories
         FROM vaultkeeps vk
         INNER JOIN keeps k ON k.id = vk.keepId 
         WHERE (vaultId = @VaultId AND vk.userId = @UserId)";
-      return _db.Query<Keep>(sql, new { vaultId, userId });
+      return _db.Query<VaultKeepViewModel>(sql, new { vaultId, userId });
     }
 
     internal bool Delete(int id, string userId)
