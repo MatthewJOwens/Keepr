@@ -34,6 +34,10 @@ export default new Vuex.Store({
     },
     setVaultKeeps(state, vaultKeeps) {
       state.vaultKeeps = vaultKeeps
+    },
+    spliceKeep(state, keepId) {
+      let data = state.userKeeps.findIndex(keep => keep.id == keepId)
+      state.userKeeps.splice(data, 1)
     }
   },
   actions: {
@@ -89,12 +93,9 @@ export default new Vuex.Store({
         if (res) {
           console.log("Successfully deleted.")
           // do I need to do anything with vaultkeeps?
+          commit("spliceKeep", keepToDelete.id)
         }
-        if (keepToDelete.isPrivate == false) {
-          router.push({ name: "mainVue", params: {} })
-        } else if (keepToDelete.isPrivate == true) {
-          router.push({ name: "dashboard", params: {} })
-        }
+
       } catch (error) {
         console.error(error)
       }
