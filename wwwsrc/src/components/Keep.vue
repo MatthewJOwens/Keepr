@@ -1,19 +1,5 @@
-// individual Keeps -- card and modal
-// keep count, share count, view count
-// counts highlight on hover
-// image and name on main part
-// image, name, and description on modal
-// modal data-target="#modal-{{keepData.id}}", I think
 <template>
   <div class="keep card" @mouseenter="showOverlay = true" @mouseleave="showOverlay = false">
-    <!-- <div class="position-absolute text-white" style="top: 0" v-if="showOverlay">
-      <div class="btn-group dropdown">
-        <VaultSaveDropdown :keepData="keepData" :vaults="vaults" />
-      </div>
-    </div>-->
-    <!-- NOTE On Hover (@mouseover, @mouseleave) save to vault dropdown -->
-    <!-- dropdown lists vaults and add new vault option -->
-    <!-- put in its own component with v-if="isAuthenticated"? -->
     <img
       class="card-img-top"
       :src="keepData.img"
@@ -31,11 +17,10 @@
       <h5 class="card-title">{{keepData.name}}</h5>
     </div>
     <div class="card-footer row d-flex justify-content-around m-0">
-      <!-- TODO highlight on hover -->
       <div class="col-4 p-0">
         <i
           class="fab fa-korvue"
-          :class="{hover: !isHome}"
+          :class="{hoverIcon: !isHome}"
           data-toggle="modal"
           :data-target="'#toVaultModal-' + keepData.id"
         ></i>
@@ -43,12 +28,12 @@
       </div>
       <!-- TODO bring up share menu? -->
       <div class="col-4 p-0">
-        <i class="fas fa-share hover"></i>
+        <i class="fas fa-share hoverIcon"></i>
         {{keepData.shares}}
       </div>
       <div class="col-4 p-0">
         <i
-          class="far fa-eye hover"
+          class="far fa-eye hoverIcon"
           data-toggle="modal"
           :data-target="'#modal-' + keepData.id"
           @click="upViewCount()"
@@ -75,7 +60,7 @@
             <p class="card-text">{{keepData.description}}</p>
           </div>
           <div class="modal-footer row d-flex justify-content-around m-0 text-center">
-            <!-- TODO maybe replace these with FA icons? -->
+            <!-- NOTE maybe replace these with FA icons? -->
             <div class="col p-0">Kept:{{keepData.keeps}}</div>
             <div class="col p-0">Shared:{{keepData.shares}}</div>
             <div class="col p-0">Viewed:{{keepData.views}}</div>
@@ -104,7 +89,6 @@
   </div>
 </template>
 
-//TODO only show vault options if logged in
 <script>
 import ToVaultModalComp from "./ToVaultModalComp.vue";
 import VaultSaveDropdown from "./VaultSaveDropdown.vue";
@@ -126,10 +110,8 @@ export default {
   },
   methods: {
     deleteKeep() {
-      console.log("Delete ", this.keepData.id);
       let confirm = window.confirm("Are you sure you want to delete this?");
       if (confirm) {
-        console.log("Delorted");
         this.$store.dispatch("deleteKeep", this.keepData);
       }
       $("#modal-" + this.keepData.id).modal("hide");
@@ -147,7 +129,6 @@ export default {
     removeFromVault() {
       let tempVK = this.keepData;
       tempVK.vaultId = parseInt(this.$route.params.id);
-      console.log(tempVK);
       this.$store.dispatch("removeFromVault", this.keepData);
     }
   },
@@ -157,7 +138,7 @@ export default {
 
 
 <style scoped>
-.hover:hover {
+.hoverIcon:hover {
   color: red !important;
 }
 </style>

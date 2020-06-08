@@ -1,6 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <router-link class="navbar-brand" :to="{ name: 'home' }">Keepr</router-link>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <router-link class="navbar-brand" :to="{ name: 'mainVue' }" v-if="$auth.isAuthenticated">Keepr</router-link>
+    <router-link class="navbar-brand" :to="{ name: 'home' }" v-else>Keepr</router-link>
     <button
       class="navbar-toggler"
       type="button"
